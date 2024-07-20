@@ -7,9 +7,12 @@ from pandas.api.types import (
     is_numeric_dtype,
     is_object_dtype,
 )
+import warnings 
+
 from sqlalchemy import text
 import psycopg2
 import pandas as pd
+warnings.filterwarnings('ignore') 
 conn = st.connection("postgresql", type="sql")
 
 
