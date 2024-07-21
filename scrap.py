@@ -9,7 +9,7 @@ import psycopg2
 
 driver = webdriver.Chrome()
 
-url="https://www.redbus.in/bus-tickets/goa-airport-to-calangute-goa?fromCityId=197221&toCityId=253650&fromCityName=Goa%20Airport&toCityName=Calangute%20(goa)&busType=Any&srcCountry=IND&destCountry=IND&onward=21-Jul-2024"
+url="https://www.redbus.in/bus-tickets/pandharpur-to-goa?fromCityId=76187&toCityId=210&fromCityName=Pandharpur&toCityName=Goa&busType=Any&srcCountry=IND&destCountry=IND&onward=21-Jul-2024"
 
 driver.get(url)
 driver.maximize_window()
@@ -59,7 +59,7 @@ for x in range(20):
 	seats_available = driver.find_elements(By.XPATH, "//div[contains(@class,'column-eight')]//div[contains(@class,'seat-left')]")
 
 	for i in range(len(departing_time)):
-		data = "'KTCL','goa-airport-to-calangute-goa'"+ ",'" + url + "', '"  + busname[i].text + "', '" + bustype[i].text + "', '" + departing_time[i].text + "', '" + duration[i].text + "', '" + reaching_time[i].text + "', '" + star_rating[i].text + "', '" + price[i].text + "', '" + seats_available[i].text + "')"
+		data = "'KTCL','pandharpur-to-goa'"+ ",'" + url + "', '"  + busname[i].text + "', '" + bustype[i].text + "', '" + departing_time[i].text + "', '" + duration[i].text + "', '" + reaching_time[i].text + "', '" + star_rating[i].text + "', '" + price[i].text + "', '" + seats_available[i].text + "')"
 		qry = ins_qry + data
 		print(qry)
 
