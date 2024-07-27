@@ -17,13 +17,20 @@ conn = st.connection("postgresql", type="sql")
 
 
 df = pd.DataFrame(conn.query("SELECT * FROM redbus"))
+df['price'] =df['price'].replace('',0).astype(int)
+
+
+df['star_rating'] = df['star_rating'].replace({'':0,'New':0}).astype(float) 
+df['star_rating'] = df['star_rating'].fillna(0)
 
 st.title("Redbus Data Scraping Project")
 def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    
     modify = st.checkbox("Add filters")
     if not modify:
         return df
     df = df.copy()
+ 
     for col in df.columns:
         if is_object_dtype(df[col]):
             try:
@@ -60,24 +67,26 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     step=step,
                 )
                 df = df[df[column].between(*user_num_input)]
-            elif is_datetime64_any_dtype(df[column]):
-                user_date_input = right.date_input(
-                    f"Values for {column}",
-                    value=(
-                        df[column].min(),
-                        df[column].max(),
-                    ),
-                )
-                if len(user_date_input) == 2:
-                    user_date_input = tuple(map(pd.to_datetime, user_date_input))
-                    start_date, end_date = user_date_input
-                    df = df.loc[df[column].between(start_date, end_date)]
+            # elif is_datetime64_any_dtype(df[column]):
+            #     user_date_input = right.date_input(
+            #         f"Values for {column}",
+            #         value=(
+            #             df[column].min(),
+            #             df[column].max(),
+            #         ),
+            #     )
+            #     if len(user_date_input) == 2:
+            #         user_date_input = tuple(map(pd.to_datetime, user_date_input))
+            #         start_date, end_date = user_date_input
+            #         df = df.loc[df[column].between(start_date, end_date)]
             else:
                 user_text_input = right.text_input(
                     f"Substring or regex in {column}",
                 )
                 if user_text_input:
                     df = df[df[column].astype(str).str.contains(user_text_input)]
+          
+                    
 
     return df 
 
