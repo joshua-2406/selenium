@@ -39,7 +39,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 pass
 
         if is_datetime64_any_dtype(df[col]):
-            df[col] = df[col].dt.tz_localize(None)
+            df[col] = df[col].dt.strftime('%H:%M')
 
     modification_container = st.container()
 
